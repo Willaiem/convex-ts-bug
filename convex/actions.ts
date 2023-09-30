@@ -1,7 +1,7 @@
-import { action, query } from "./_generated/server";
+import { action, internalQuery } from "./_generated/server";
 import { internal } from "./_generated/api";
 
-export const getTasks = query({
+export const getTasks = internalQuery({
     args: {},
     handler: async (ctx) => {
         const tasks = await ctx.db.query('tasks').collect()
@@ -16,10 +16,6 @@ export const invokeAction = action({
     handler: async (ctx) => {
         const tasks = await ctx.runQuery(internal.actions.getTasks)
 
-        const texts = tasks.map(task => task.text)
-
-        // do something else...
-
-        return texts
+        return tasks
     }
 })
